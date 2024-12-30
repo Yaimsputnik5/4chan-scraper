@@ -52,7 +52,7 @@ async function scrapeThread(threadUrl) {
   const uniqueFileUrls = [...new Set(fileUrls)];
 
   for (const fileUrl of uniqueFileUrls) {
-    if (fileUrl.includes('s.jpg') || fileUrl.includes('s.png') || fileUrl.includes('s.gif')) {
+    if (fileUrl.includes('s.jpg') || fileUrl.includes('s.jpeg') || fileUrl.includes('s.png') || fileUrl.includes('s.gif') || fileUrl.includes('s.bitmap') || fileUrl.includes('s.bmp') || fileUrl.includes('s.webp') || fileUrl.includes('s.webm') || fileUrl.includes('s.mp4') || fileUrl.includes('s.mov') || fileUrl.includes('s.mkv')) {
       continue;
     }
 
