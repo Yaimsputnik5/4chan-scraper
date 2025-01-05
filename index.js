@@ -161,14 +161,27 @@ async function scrapeThread(threadUrl) {
   const uniqueFileUrls = [...new Set(fileUrls)];
 
   for (const fileUrl of uniqueFileUrls) {
-    const fileName = path.basename(url.parse(fileUrl).pathname);
-    const filePath = path.join(TARGET_FOLDER, fileName);
-
-    if (await fs.pathExists(filePath)) {
+    if (fileUrl.includes('s.jpg') || fileUrl.includes('s.jpeg') || fileUrl.includes('s.png') || fileUrl.includes('s.gif') || fileUrl.includes('s.bitmap') || fileUrl.includes('s.bmp') || fileUrl.includes('s.webp') || fileUrl.includes('s.webm') || fileUrl.includes('s.mp4') || fileUrl.includes('s.mov') || fileUrl.includes('s.mkv')) {
       continue;
     }
 
-    console.log(`Downloading: ${fileUrl}`);
+    const fileName = path.basename(url.parse(fileUrl).pathname);
+    const filePath = path.join(TARGET_FOLDER, fileName);
+
+    let date_ob = new Date();
+    let day = ("0" + date_ob.getDate()).slice(-2);
+    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+    let year = date_ob.getFullYear();
+    let timestamp = month + "/" + day + "/" + year + " | " + date_ob.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+    if (await fs.pathExists(filePath)) {
+      // console.log(`[${timestamp}] | File: ${filePath} Already Exists | Skipping Download.\n`);
+      // Disabled By Default To Prevent Flooding Console
+      continue;
+    }
+
+    console.log(`[${timestamp}] | Downloading: ${fileUrl} | To: ${filePath}\n`);
+    
     try {
       const fileResponse = await proxyHttpsRequest({
         hostname: new URL(fileUrl).hostname,
@@ -182,7 +195,7 @@ async function scrapeThread(threadUrl) {
       await new Promise((resolve) => writer.on('finish', resolve));
       console.log(`Downloaded: ${fileUrl}`);
     } catch (error) {
-      console.error(`Failed To Download ${fileUrl}:`, error.message);
+      console.error(`[${timestamp}] | Failed To Download: ${fileUrl}:`, error.message);
     }
   }
 }
