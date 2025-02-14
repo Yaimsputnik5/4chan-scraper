@@ -152,7 +152,7 @@ node index.js
 
    ##  <center>Credits</center>
 
-   ### <center>- [**Yaimsputnik5**](https://github.com/Yaimsputnik5/)/[Mr.Gibson](https://discord.com/users/1303231984411082783)</center>
+   ### <center>- [**Yaimsputnik5**](https://github.com/Yaimsputnik5/)/[Mr.Gibson](https://discord.com/users/1339837800383647864)</center>
    
 ---
 
