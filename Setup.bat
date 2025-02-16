@@ -3,8 +3,8 @@ color 02
 cls
 title Deleting Old 4chan-scraper Dependencies
 echo Deleting Old 4chan-scraper Dependencies
-del node_modules/
-del package-lock.json
+rmdir /S /Q node_modules/
+del /F /S /Q package-lock.json
 cls
 echo ------------------------------------------------------------
 title Installing 4chan-scraper Dependencies
