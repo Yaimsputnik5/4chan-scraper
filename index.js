@@ -28,9 +28,17 @@ async function makeFileHidden(filePath) {
   if (os.platform() === 'win32') {
     return new Promise((resolve, reject) => {
       exec(`attrib +h "${filePath}"`, (error) => {
-        if (error) {
-          return reject(error);
-        }
+        if (error) return reject(error);
+        resolve();
+      });
+    });
+  } else if (os.platform() === 'darwin') {
+    const hiddenFilePath = path.join(path.dirname(filePath), `.${path.basename(filePath)}`);
+    await fs.rename(filePath, hiddenFilePath);
+
+    return new Promise((resolve, reject) => {
+      exec(`chflags hidden "${hiddenFilePath}"`, (error) => {
+        if (error) return reject(error);
         resolve();
       });
     });
@@ -39,6 +47,7 @@ async function makeFileHidden(filePath) {
     await fs.rename(filePath, hiddenFilePath);
   }
 }
+
 
 async function scrapeThread(threadUrl) {
   const response = await axios.get(threadUrl);
